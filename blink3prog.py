@@ -2,6 +2,9 @@ import time, sys
 
 from blink1.blink1 import Blink1
 
+colors = ['Black', 'White', 'Yellow', 'Blue', 'Red']
+i = 1
+
 blink1_serials = Blink1.list()
 print("blink(1) devices found: " + ','.join(blink1_serials))
 try:
@@ -11,13 +14,26 @@ except:
     sys.exit()
 print("blink(1) found")
 
-b1.writePatternLine( 1000, 'yellow',  1)
-b1.writePatternLine( 1000, 'blue',  2)
-b1.writePatternLine( 1000, 'red',  3)
+patron = input("Numero de pasos: ")
+tiempo = input("Tiempo por paso: ")
 
-print("playing pattern")
+while i <= patron:
+    temp = str(raw_input("color paso " + str(i) + ": "))
+    b1.writePatternLine(tiempo*1000, temp,  i)
+    i = i + 1
+
+print("Reproducionedo patron")
 b1.play()
-time.sleep(5)
-print("stopping pattern")
+time.sleep(patron*tiempo + 1)
+
+temp = str(raw_input("Desea salvar el patron? Y/N: "))
+if temp == "Y":
+   b1.savePattern()
+elif temp == "N":
+    j = 1
+    while j <= 16:
+        b1.writePatternLine(10, 'black',  j)
+        j = j + 1
+
 b1.stop()
 b1.close()
