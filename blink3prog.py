@@ -2,7 +2,7 @@ import time, sys
 
 from blink1.blink1 import Blink1
 
-colors = ['Black', 'White', 'Yellow', 'Blue', 'Red']
+colors = ['black', 'white', 'yellow', 'blue', 'red', 'green']
 i = 1
 
 blink1_serials = Blink1.list()
@@ -19,9 +19,12 @@ tiempo = input("Tiempo por paso: ")
 
 while i <= patron:
     temp = str(raw_input("color paso " + str(i) + ": "))
-    b1.writePatternLine(tiempo*1000, temp,  i)
-    i = i + 1
-
+    if temp in colors:
+        b1.writePatternLine(tiempo*1000, temp,  i)
+        i = i + 1
+    else:
+        print("Color no reconocido")
+    
 print("Reproducionedo patron")
 b1.play()
 time.sleep(patron*tiempo + 1)
